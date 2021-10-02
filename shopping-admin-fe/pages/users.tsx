@@ -16,6 +16,7 @@ import {
   import React, { useEffect, useState } from 'react';
   import { StyledTableCell } from '../components/common/styled-table-row';
   import useSWR from 'swr';
+  import UserApi from '../lib/api/userApi';
   
   const useStyles = makeStyles((theme: Theme) => ({
     root: {
@@ -45,22 +46,16 @@ import {
   const Users: NextPage = () => {
     const classes = useStyles();
     const [pageIndex, setPageIndex] = useState(0);
-    const [size, setSize] = useState(10);
-    // const { data } = useSWR([pageIndex, size, queryParamsReq], StockAPI.findAll);
+    const [size, setSize] = useState(5);
+    const { data } = useSWR([pageIndex, size], UserApi.findAll);
+    console.log(data);
     // 여기서 swr써서 데이터 받아오기.
-    const data = {
-        data: {
-            content:1, 
-            pageable: {
-                pageSize: 12
-            }, totalElements:123 
-        }
-        
-    }; // 이거 원래는 swr로 받아온 데이터임.
-    const { content, pageable, totalElements } = data.data;
-    const handlePage = (offset) => {
-        setPageIndex(Math.floor(offset / pageable.pageSize));
-      };
+    // const { content, pageable, totalElements } = data.data;
+
+    // const { content, pageable, totalElements } = data.data;
+    // const handlePage = (offset) => {
+    //     setPageIndex(Math.floor(offset / pageable.pageSize));
+    //   };
 
       return (
         <Container className={classes.root}>
