@@ -17,6 +17,10 @@ import {
   import { StyledTableCell } from '../components/common/styled-table-row';
   import useSWR from 'swr';
   import UserApi from '../lib/api/userApi';
+import { collapseTextChangeRangesAcrossMultipleVersions } from 'typescript';
+import UserTableRow from "../components/users/user-table-row";
+import Pagination from 'material-ui-flat-pagination';
+
   
   const useStyles = makeStyles((theme: Theme) => ({
     root: {
@@ -48,14 +52,22 @@ import {
     const [pageIndex, setPageIndex] = useState(0);
     const [size, setSize] = useState(5);
     const { data } = useSWR([pageIndex, size], UserApi.findAll);
-    console.log(data);
-    // 여기서 swr써서 데이터 받아오기.
-    // const { content, pageable, totalElements } = data.data;
+    if (!data) return <div/>;
 
-    // const { content, pageable, totalElements } = data.data;
-    // const handlePage = (offset) => {
-    //     setPageIndex(Math.floor(offset / pageable.pageSize));
-    //   };
+    
+
+    console.log(data.data);
+
+    console.log(data.data.data);
+    const { content, pageable, totalElements } = data.data.data;
+    const usersList = content;
+    console.log("호이잇"+pageable.pageSize, totalElements);
+    const handlePage = (offset) => {
+      setPageIndex(Math.floor(offset / pageable.pageSize));
+    }
+
+    console.log("userList"+usersList)
+    
 
       return (
         <Container className={classes.root}>
@@ -71,16 +83,26 @@ import {
               </TableRow>
             </TableHead>
             <TableBody>
-              {/* {content &&
-                content.length > 0 &&
-                content.map((stock) => (
-                  <StockTableRow key={stock.id} stock={stock} />
-                ))} */}
-                {/* /*등등,, */}
+              {usersList &&
+                usersList.length > 0 &&
+                usersList.map((user) => (
+                  <UserTableRow key={user.id} user={user} />
+                ))} 
             </TableBody>
                 </Table>
                 </TableContainer>
             </div>
+
+            <div className={classes.pagination}>
+        {pageable && content.length > 0 && (
+          <Pagination
+            limit={pageable.pageSize}
+            offset={pageable.pageNumber * pageable.pageSize}
+            total={totalElements}
+            onClick={(e, offset) => handlePage(offset)}
+          />
+        )}
+      </div>
 
         </Container>
       )
