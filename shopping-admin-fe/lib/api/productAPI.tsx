@@ -2,15 +2,15 @@ import { server } from './baseURL';
 
 
 
-const UserAPI = {
+const ProductAPI = {
     findAll: async (page: number, size: number) => {
         try{
             const { data, status } = await server.get(
-                `/users?page=${page}&size=${size}`,
+                `/products?page=${page}&size=${size}`,
     
             )
             if(status != 200){
-                alert("UserAPI.find를 하지 못했습니다. 에러 코드"+status);
+                alert("ProductAPI.find를 하지 못했습니다. 에러 코드"+status);
               }
             return {
                 data,
@@ -23,4 +23,4 @@ const UserAPI = {
     },
 }
 
-export default UserAPI;
+export default ProductAPI;

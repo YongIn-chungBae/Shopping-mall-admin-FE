@@ -17,7 +17,6 @@ import {
   import { StyledTableCell } from '../components/common/styled-table-row';
   import useSWR from 'swr';
   import UserApi from '../lib/api/userApi';
-import { collapseTextChangeRangesAcrossMultipleVersions } from 'typescript';
 import UserTableRow from "../components/users/user-table-row";
 import Pagination from 'material-ui-flat-pagination';
 
@@ -53,19 +52,14 @@ import Pagination from 'material-ui-flat-pagination';
     const [size, setSize] = useState(5);
     const { data } = useSWR([pageIndex, size], UserApi.findAll);
     if (!data) return <div/>;
-
-    
-
     console.log(data.data);
 
     console.log(data.data.data);
     const { content, pageable, totalElements } = data.data.data;
     const usersList = content;
-    console.log("호이잇"+pageable.pageSize, totalElements);
     const handlePage = (offset) => {
       setPageIndex(Math.floor(offset / pageable.pageSize));
     }
-
     console.log("userList"+usersList)
     
 
@@ -76,7 +70,7 @@ import Pagination from 'material-ui-flat-pagination';
                 <Table className={classes.table} aria-label="customized table">
                 <TableHead>
               <TableRow>
-                <StyledTableCell>Id</StyledTableCell>
+                <StyledTableCell align="center">Id</StyledTableCell>
                 <StyledTableCell align="center">유저 이름</StyledTableCell>
                 <StyledTableCell align="center">유저 이메일</StyledTableCell>
                 <StyledTableCell align="center">등등</StyledTableCell>

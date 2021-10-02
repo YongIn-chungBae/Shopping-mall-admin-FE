@@ -12,13 +12,13 @@ import {
   Theme,
   Toolbar,
   Typography,
-} from '@material-ui/core';
-import MenuIcon from '@material-ui/icons/Menu';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
-import { makeStyles } from '@material-ui/styles';
-import Link from 'next/link';
-import React, { FC, useState } from 'react';
+} from "@material-ui/core";
+import MenuIcon from "@material-ui/icons/Menu";
+import InboxIcon from "@material-ui/icons/MoveToInbox";
+import MailIcon from "@material-ui/icons/Mail";
+import { makeStyles } from "@material-ui/styles";
+import Link from "next/link";
+import React, { FC, useState } from "react";
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
     padding: theme.spacing(0),
@@ -32,15 +32,14 @@ const useStyles = makeStyles((theme: Theme) => ({
 const Nav: FC = () => {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
-  
 
   const toggleDrawer =
     (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
-      console.log(']-----] toggleDrawer [-----[');
+      console.log("]-----] toggleDrawer [-----[");
       if (
-        event.type === 'keydown' &&
-        ((event as React.KeyboardEvent).key === 'Tab' ||
-          (event as React.KeyboardEvent).key === 'Shift')
+        event.type === "keydown" &&
+        ((event as React.KeyboardEvent).key === "Tab" ||
+          (event as React.KeyboardEvent).key === "Shift")
       ) {
         return;
       }
@@ -55,37 +54,38 @@ const Nav: FC = () => {
       onKeyDown={toggleDrawer(false)}
     >
       <div className={classes.toolbar}>
-        <Divider/>
+        <Divider />
         <List>
-          <Link href={'/users'} as={'/users'}>
-            <ListItem button key={'users'}>
+          <Link href={"/users"} as={"/users"}>
+            <ListItem button key={"users"}>
               <ListItemIcon>
-                <InboxIcon/>
+                <InboxIcon />
               </ListItemIcon>
-              <ListItemText primary={'유저관리 페이지'} />
+              <ListItemText primary={"유저관리 페이지"} />
+            </ListItem>
+          </Link>
+
+          <Link href={"/products"} as={"/products"}>
+            <ListItem button key={"products"}>
+              <ListItemIcon>
+                <InboxIcon />
+              </ListItemIcon>
+              <ListItemText primary={"제품 리스트"} />
             </ListItem>
           </Link>
         </List>
       </div>
-      
-      
     </div>
   );
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static"
-        color="secondary"
-      >
+      <AppBar position="static" color="secondary">
         <Toolbar>
-          <IconButton
-            onClick={toggleDrawer(true)}
-          >
+          <IconButton onClick={toggleDrawer(true)}>
             <MenuIcon />
           </IconButton>
-          <Typography>
-            ShoppingMall Admin
-          </Typography>
+          <Typography>ShoppingMall Admin</Typography>
         </Toolbar>
       </AppBar>
       <Drawer anchor="left" open={open} onClose={toggleDrawer(false)}>
